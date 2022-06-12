@@ -5,10 +5,19 @@
 
 trigger:
 - master
-
-pool:
-  vmImage: ubuntu-latest
 - task: ArtifactoryMaven@2
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
+    artifactoryResolverService: 'hts2'
+    targetResolveReleaseRepo: 'ad-libs-release'
+    targetResolveSnapshotRepo: 'ad-libs-snapshot'
+    artifactoryDeployService: 'hts2'
+    targetDeployReleaseRepo: 'ad-libs-release-local'
+    targetDeploySnapshotRepo: 'ad-libs-snapshot-local'
+- task: ArtifactoryPublishBuildInfo@1
+  inputs:
+    artifactoryService: 'hts2'
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'DevOps'
