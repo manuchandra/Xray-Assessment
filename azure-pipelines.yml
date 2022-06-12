@@ -23,4 +23,4 @@ steps:
     artifactoryService: 'hts2'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
-    projectKey: 'DevOps'
+    projectKey: 'devops'
