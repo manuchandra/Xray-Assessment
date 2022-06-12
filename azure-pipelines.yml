@@ -8,18 +8,19 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 steps:
-- task: ArtifactoryMaven@2
+- task: JFrogMaven@1
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
-    artifactoryResolverService: 'hts2'
+    artifactoryResolverService: 'hts2-new'
     targetResolveReleaseRepo: 'ad-libs-release'
     targetResolveSnapshotRepo: 'ad-libs-snapshot'
-    artifactoryDeployService: 'hts2'
+    artifactoryDeployService: 'hts2-new'
     targetDeployReleaseRepo: 'ad-libs-release-local'
     targetDeploySnapshotRepo: 'ad-libs-snapshot-local'
-- task: ArtifactoryPublishBuildInfo@1
+- task: JFrogPublishBuildInfo@1
   inputs:
-    artifactoryService: 'hts2'
+    artifactoryConnection: 'hts2-new'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+    projectKey: 'devops'
