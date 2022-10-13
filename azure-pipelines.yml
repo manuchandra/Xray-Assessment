@@ -18,6 +18,7 @@ steps:
     artifactoryDeployService: 'hts2-new'
     targetDeployReleaseRepo: 'ad-libs-release-local'
     targetDeploySnapshotRepo: 'ad-libs-snapshot-local'
+    collectBuildInfo: 'true'
 - task: JFrogPublishBuildInfo@1
   inputs:
     artifactoryConnection: 'hts2-new'
