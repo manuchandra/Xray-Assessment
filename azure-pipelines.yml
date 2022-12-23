@@ -13,11 +13,11 @@ steps:
     mavenPomFile: 'pom.xml'
     goals: 'install'
     artifactoryResolverService: 'hts2-new'
-    targetResolveReleaseRepo: 'ad-libs-release'
-    targetResolveSnapshotRepo: 'ad-libs-snapshot'
+    targetResolveReleaseRepo: 'deepthi-libs-release'
+    targetResolveSnapshotRepo: 'deepthi-libs-snapshot'
     artifactoryDeployService: 'hts2-new'
-    targetDeployReleaseRepo: 'ad-libs-release-local'
-    targetDeploySnapshotRepo: 'ad-libs-snapshot-local'
+    targetDeployReleaseRepo: 'deepthi-libs-release-local'
+    targetDeploySnapshotRepo: 'deepthi-libs-snapshot-local'
     collectBuildInfo: 'true'
 - task: JFrogPublishBuildInfo@1
   inputs:
