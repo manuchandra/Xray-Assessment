@@ -15,7 +15,7 @@ steps:
     script: |
       # Write your commands here
       
-      echo '$MAVEN_OPTS'
+      echo 'env | sort'
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
