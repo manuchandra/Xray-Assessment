@@ -9,6 +9,13 @@ pool:
   vmImage: ubuntu-latest
 steps:
 - task: JFrogMaven@1
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      # Write your commands here
+      
+      'echo $MAVEN_OPTS'
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
@@ -20,6 +27,7 @@ steps:
     targetDeployReleaseRepo: 'deepthi-libs-release-local'
     targetDeploySnapshotRepo: 'deepthi-libs-snapshot-local'
     collectBuildInfo: 'true'
+    
 - task: JFrogPublishBuildInfo@1
   inputs:
     artifactoryConnection: 'hts2-new'
