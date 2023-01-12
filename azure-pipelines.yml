@@ -1,18 +1,17 @@
-# Maven
+ Maven
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 trigger:
-- master
+- main
+pool:
+  vmImage: ubuntu-latest
 steps:
-- task: JFrogToolsInstaller@1
+
+- task: Bash@3
   inputs:
-    artifactoryConnection: 'server-new'
-    cliInstallationRepo: 'jfrog-cli-v2-new'
-    installCustomVersion: true
-    cliVersion: '2.19.0'
-    installExtractors: true
-    extractorsInstallationRepo: 'extractors'
+    targetType: 'inline'
+    script: 'env | sort'
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
