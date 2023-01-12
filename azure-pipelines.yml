@@ -1,4 +1,4 @@
-Variable 'goal' was defined in the Variables tab
+
 # Variable Group 'Sonar' was defined in the Variables tab
 variables:
 - name: BuildParameters.mavenPOMFile
