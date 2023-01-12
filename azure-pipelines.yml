@@ -8,7 +8,6 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 steps:
-
 - task: Bash@3
   inputs:
     targetType: 'inline'
@@ -37,3 +36,8 @@ steps:
     artifactoryConnection: 'art2'
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
+- task: Grunt@0
+  inputs:
+    gruntFile: 'gruntfile.js'
+    targets: 'ArrayList<Integer> arrayList = new ArrayList<>(); System.out.println("i \t Free Memory \t Total Memory \t Max Memory"); for (int i = 0; i < 1000000; i++) {     arrayList.add(i);     System.out.println(i + " \t " + Runtime.getRuntime().freeMemory() +       " \t \t " + Runtime.getRuntime().totalMemory() +       " \t \t " + Runtime.getRuntime().maxMemory()); }'
+    gruntCli: 'node_modules/grunt-cli/bin/grunt'
