@@ -53,7 +53,7 @@ jobs:
    displayName: Artifactory Maven
    inputs:
      goals: $(goal)
-     options: -Dmaven.test.failure.ignore=true -Pcoverage -Dsonar.host.url=$(sonar-url) -Dsonar.login=$(sonar-apikey)  -Dsonar.branch.name=service -Dsonar.projectKey=com.electrabel.neos:neos:SERVICE -Dsonar.projectName="JavaBE:nEOS" -X
+    
      artifactoryResolverService: 1d72267f-d129-4f69-88b1-2d1df042cf3c
      targetResolveReleaseRepo: manu-libs-release
      targetResolveSnapshotRepo: manu-libs-snapshot
