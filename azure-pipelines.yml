@@ -39,4 +39,4 @@ steps:
     script: 'write-host "$($env:MAVEN_OPTS)"'
 - task: CmdLine@2
   inputs:
-    script: 'jvm top'
+    script: 'apt-get install jvm | jvm top'
