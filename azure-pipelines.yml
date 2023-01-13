@@ -9,7 +9,7 @@ pool:
 steps:
 - task: CmdLine@2
   inputs:
-    script: '"java -jar $(ArrayList<Integer> arrayList = new ArrayList<>();System.out.println("i \t Free Memory \t Total Memory \t Max Memory");for (int i = 0; i < 1000000; i++) { arrayList.add(i);System.out.println(i + " \t " + Runtime.getRuntime().freeMemory() +" \t \t " + Runtime.getRuntime().totalMemory() +" \t \t " + " \t \t " + Runtime.getRuntime().maxMemory());})'
+    script: '"java -jar $(System.out.println("i \t Free Memory \t Total Memory \t Max Memory"))"'
 - task: CmdLine@2
   inputs:
     script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'''
