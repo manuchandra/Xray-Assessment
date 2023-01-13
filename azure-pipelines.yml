@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 variables:
 - name: MAVEN_OPTS
-  value: '-Xms100m -Xmx100m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'
+  value: '-Xms10m -Xmx10m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'
 trigger:
 - main
 pool:
