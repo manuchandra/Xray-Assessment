@@ -9,7 +9,7 @@ pool:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'java -Xms4096m -Xmx4096m maven'
+    script: 'java -Xms4096m -Xmx4096m'
 - task: CmdLine@2
   inputs:
     script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'''
