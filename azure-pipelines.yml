@@ -19,7 +19,9 @@ steps:
     targetType: 'inline'
     script: |
       set MAVEN_OPTS="-Xms1024m -Xmx4096m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none"
-      
+      variables:
+       name: MAVEN_OPTS
+       value: '-Xms1024m -Xmx4096m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'
       write-host "before: $($env:MAVEN_OPTS)"
 - task: JFrogMaven@1
   inputs:
@@ -36,9 +38,6 @@ steps:
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     includeEnvVars: true
-  variables:
-    name: MAVEN_OPTS
-    value: '-Xms1024m -Xmx4096m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'  
 - task: CmdLine@2
   inputs:
     script: 'echo $MAVEN_OPTS'
