@@ -9,7 +9,7 @@ pool:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'''
+    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'' | echo $MAVEN_OPTS'
 - task: Bash@3
   inputs:
     targetType: 'inline'
@@ -43,4 +43,4 @@ steps:
     script: 'write-host "$($env:MAVEN_OPTS)"'
 - task: CmdLine@2
   inputs:
-    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''heapsize|permsize|threadstacksize'''
+    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''heapsize|permsize|threadstacksize'' | echo $MAVEN_OPTS'
