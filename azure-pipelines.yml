@@ -28,6 +28,7 @@ steps:
     mavenPomFile: 'pom.xml'
     goals: 'install'
     export JAVA_OPTS: -Xms=1024m -Xmx=4096m -XXMaxPermSize=500m
+    mavenOptions: "-Xms3072m -Xmx3072m"
     artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
