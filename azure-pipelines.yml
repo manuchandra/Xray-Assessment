@@ -39,4 +39,4 @@ steps:
     script: 'write-host "$($env:MAVEN_OPTS)"'
 - task: CmdLine@2
   inputs:
-    script: 'sudo apt-get install jvm | jvm top'
+    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''heapsize|permsize|threadstacksize'''
