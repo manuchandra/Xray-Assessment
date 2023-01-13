@@ -9,7 +9,10 @@ pool:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'' | echo $MAVEN_OPTS'
+    script: 'echo $MAVEN_OPTS'
+- task: CmdLine@2
+  inputs:
+    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'''
 - task: Bash@3
   inputs:
     targetType: 'inline'
@@ -36,11 +39,13 @@ steps:
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     includeEnvVars: true
-
+- task: CmdLine@2
+  inputs:
+    script: 'echo $MAVEN_OPTS'
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
     script: 'write-host "$($env:MAVEN_OPTS)"'
 - task: CmdLine@2
   inputs:
-    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''heapsize|permsize|threadstacksize'' | echo $MAVEN_OPTS'
+    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''heapsize|permsize|threadstacksize'''
