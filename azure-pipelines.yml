@@ -9,7 +9,7 @@ pool:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'java -XX:+PrintFlagsFinal -Xms512m -Xmx1024m -version | grep -iE ''''HeapSize|PermSize|ThreadStackSize'''''
+    script: 'java -XX:+PrintFlagsFinal -Xms512m -Xmx1024m -version'
 - task: CmdLine@2
   inputs:
     script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'''
