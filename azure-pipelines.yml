@@ -9,7 +9,7 @@ pool:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'java -jar public long totalMemory()'
+    script: 'java -jar public long totalMemory();'
 - task: CmdLine@2
   inputs:
     script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'''
