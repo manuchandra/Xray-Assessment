@@ -25,7 +25,7 @@ steps:
       write-host "before: $($env:MAVEN_OPTS)"
 - task: JFrogMaven@1
   inputs:
-  set MAVEN_HOME: /usr/share/apache-maven-3.8.7
+    set MAVEN_HOME: /usr/share/apache-maven-3.8.7
     mavenPomFile: 'pom.xml'
     goals: 'install'
     options: -DXms=100m -DXmx=10m -DMaxPermSize=10m
