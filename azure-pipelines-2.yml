@@ -2,21 +2,49 @@
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
-
+variables:
+- name: MAVEN_OPTS
+  value: '-Xms10m -Xmx10m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'
 trigger:
-- master
-
+- main
 pool:
   vmImage: ubuntu-latest
-
 steps:
-- task: Maven@3
+- task: CmdLine@2
+  inputs:
+    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'''
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'env | sort'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+     # set MAVEN_OPTS="-Xms1024m -Xmx4096m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none"
+      write-host "before: $($env:MAVEN_OPTS)"
+- task: JFrogMaven@1
   inputs:
     mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'install'
+    options: -DXms=100m -DXmx=10m -DMaxPermSize=10m
+    artifactoryResolverService: 'art2'
+    targetResolveReleaseRepo: 'manu-libs-release'
+    targetResolveSnapshotRepo: 'manu-libs-snapshot'
+    artifactoryDeployService: 'art2'
+    targetDeployReleaseRepo: 'manu-libs-release'
+    targetDeploySnapshotRepo: 'manu-libs-snapshot'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    includeEnvVars: true
+- task: CmdLine@2
+  inputs:
+    script: 'env | sort'
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'write-host "$($env:MAVEN_OPTS)"'
+- task: CmdLine@2
+  inputs:
+    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''heapsize|permsize|threadstacksize'''
