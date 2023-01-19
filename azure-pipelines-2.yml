@@ -4,37 +4,63 @@ variables:
 - name: BuildParameters.mavenPOMFile
   value: pom.xml
 trigger:
-- main
-pool:
-  vmImage: ubuntu-latest
-  include:
+  branches:
+    include:
     - refs/heads/master
 name: $(date:yyyyMMdd)$(rev:.r)
 jobs:
 - job: Phase_1
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'install'
-    publishJUnitResults: false
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Path'
-    mavenSetM2Home: false
-    mavenOptions: '-Xms512m -Xmx1024m'
-    mavenAuthenticateFeed: true
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
   displayName: Phase 1
   cancelTimeoutInMinutes: 1
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'install'
-    publishJUnitResults: false
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Path'
-    mavenSetM2Home: false
-    mavenOptions: '-Xms512m -Xmx1024m'
-    mavenAuthenticateFeed: true
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+  pool:
+    name: Default
+  steps:
+  - checkout: self
+    clean: true
+  - task: Maven@3
+    displayName: Maven pom.xml
+    enabled: False
+    inputs:
+      mavenPOMFile: $(BuildParameters.mavenPOMFile)
+      goals: $(goal)
+      options: -Dmaven.test.failure.ignore=true -Pcoverage -Dsonar.host.url=$(sonar-url) -Dsonar.login=$(sonar-apikey)  -Dsonar.branch.name=service -Dsonar.projectKey=com.electrabel.neos:neos:SERVICE -Dsonar.projectName="JavaBE:nEOS"
+      testResultsFiles: '**/TEST-*.xml'
+      jdkVersion: 1.11
+      mavenOpts: -Xms512m -Xmx1024m
+      mavenFeedAuthenticate: true
+  - task: ArtifactoryToolsInstaller@1
+    displayName: Using Jfrog CLI 1.54.0
+    inputs:
+      artifactoryService: 1d72267f-d129-4f69-88b1-2d1df042cf3c
+      cliInstallationRepo: prd-jfrog-remote
+      installCustomVersion: true
+      cliVersion: 1.54.0
+  - task: JavaToolInstaller@0
+    displayName: Use Java 11
+    inputs:
+      versionSpec: 11
+      jdkArchitectureOption: x64
+      jdkSourceOption: PreInstalled
+  - task: PowerShell@2
+    displayName: Set MAVEN_OPTS
+    inputs:
+      targetType: inline
+      script: >-
+        $env:MAVEN_OPTS="-Xms1024m -Xmx4096m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none"
+
+        write-host "before: $($env:MAVEN_OPTS)"
+  - task: ArtifactoryMaven@2
+    displayName: Artifactory Maven
+    inputs:
+      goals: $(goal)
+      options: -Dmaven.test.failure.ignore=true -Pcoverage -Dsonar.host.url=$(sonar-url) -Dsonar.login=$(sonar-apikey)  -Dsonar.branch.name=service -Dsonar.projectKey=com.electrabel.neos:neos:SERVICE -Dsonar.projectName="JavaBE:nEOS" -X
+      artifactoryResolverService: 1d72267f-d129-4f69-88b1-2d1df042cf3c
+      targetResolveReleaseRepo: prd-maven-virtual
+      targetResolveSnapshotRepo: prd-maven-virtual
+  - task: PowerShell@2
+    displayName: MAVEN_OPTS after maven step
+    condition: succeededOrFailed()
+    inputs:
+      targetType: inline
+      script: write-host "$($env:MAVEN_OPTS)"
+...
