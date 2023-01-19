@@ -30,6 +30,11 @@ steps:
     mavenPomFile: 'pom.xml'
     goals: 'install'
     mavenOptions: '-Xms10m -Xmx10m'
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    jdkArchitectureOption: 'x64'
+    publishJUnitResults: true
+    mavenAuthenticateFeed: true
     artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
