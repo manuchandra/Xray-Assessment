@@ -29,7 +29,7 @@ steps:
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
-    mavenOptions: '-Xms10m -Xmx10m'
+    mavenOptions: '-Xmx10m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.11'
     jdkArchitectureOption: 'x64'
@@ -52,7 +52,7 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: 'write-host "before: $($env:MAVEN_OPTS)"'
+    script: 'write-host "after: $($env:MAVEN_OPTS)"'
 - task: Bash@3
   inputs:
     targetType: 'inline'
