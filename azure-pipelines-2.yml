@@ -22,18 +22,14 @@ jobs:
     inputs:
       mavenPomFile: 'pom.xml'
       goals: 'install'
-      artifactoryResolverService: 'art2'
-      targetResolveReleaseRepo: 'manu-libs-release'
-      targetResolveSnapshotRepo: 'manu-libs-snapshot'
-      artifactoryDeployService: 'art2'
-      targetDeployReleaseRepo: 'manu-libs-release'
-      targetDeploySnapshotRepo: 'manu-libs-snapshot'
-      collectBuildInfo: true
-      buildName: '$(Build.DefinitionName)'
-      buildNumber: '$(Build.BuildNumber)'
-      includeEnvVars: true
-      mavenOpts: -Xms512m -Xmx1024m
-      mavenFeedAuthenticate: true
+      publishJUnitResults: true
+      testResultsFiles: 
+      javaHomeOption: 'JDKVersion'
+      mavenVersionOption: 'Default'
+      mavenOptions: '-Xms512m -Xmx1024m'
+      mavenAuthenticateFeed: true
+      effectivePomSkip: false
+      sonarQubeRunAnalysis: false
   - task: ArtifactoryToolsInstaller@1
     displayName: Using Jfrog CLI 1.54.0
     inputs:
