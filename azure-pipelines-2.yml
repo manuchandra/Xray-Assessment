@@ -22,10 +22,10 @@ jobs:
     inputs:
       mavenPomFile: 'pom.xml'
       goals: 'install'
-      publishJUnitResults: true
-      testResultsFiles: 
+      publishJUnitResults: false
       javaHomeOption: 'JDKVersion'
-      mavenVersionOption: 'Default'
+      mavenVersionOption: 'Path'
+      mavenSetM2Home: false
       mavenOptions: '-Xms512m -Xmx1024m'
       mavenAuthenticateFeed: true
       effectivePomSkip: false
