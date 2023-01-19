@@ -1,52 +1,65 @@
-# Maven
-# Build your Java project and run tests with Apache Maven.
-# Add steps that analyze code, save build artifacts, deploy, and more:
-# https://docs.microsoft.com/azure/devops/pipelines/languages/java
-#variables:
-#- name: MAVEN_OPTS
- # value: '-Xms10m -Xmx10m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'
+# Variable 'goal' was defined in the Variables tab
+# Variable Group 'Sonar' was defined in the Variables tab
+variables:
+- name: BuildParameters.mavenPOMFile
+  value: pom.xml
 trigger:
-- main
-pool:
-  vmImage: ubuntu-latest
-steps:
-- task: CmdLine@2
-  inputs:
-    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''HeapSize|PermSize|ThreadStackSize'''
-- task: Bash@3
-  inputs:
-    targetType: 'inline'
-    script: 'env | sort'
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: |
-    #  mavenOptions: -Xms1024m -Xmx4096m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none
-     # write-host "before: $($env:MAVEN_OPTS)"
-- task: JFrogMaven@1
-  inputs:
-    set MAVEN_HOME: /usr/share/apache-maven-3.8.7
-    mavenPomFile: 'pom.xml'
-    goals: 'install'
-    mavenOptions: -Xms10m -Xmx10m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none
-    options: -DXms=100m -DXmx=10m -DMaxPermSize=10m
-    artifactoryResolverService: 'art2'
-    targetResolveReleaseRepo: 'manu-libs-release'
-    targetResolveSnapshotRepo: 'manu-libs-snapshot'
-    artifactoryDeployService: 'art2'
-    targetDeployReleaseRepo: 'manu-libs-release'
-    targetDeploySnapshotRepo: 'manu-libs-snapshot'
-    collectBuildInfo: true
-    buildName: '$(Build.DefinitionName)'
-    buildNumber: '$(Build.BuildNumber)'
-    includeEnvVars: true
-- task: CmdLine@2
-  inputs:
-    script: 'env | sort'
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: 'write-host "$($env:MAVEN_OPTS)"'
-- task: CmdLine@2
-  inputs:
-    script: 'java -XX:+PrintFlagsFinal -version | grep -iE ''heapsize|permsize|threadstacksize'''
+  branches:
+    include:
+    - refs/heads/master
+name: $(date:yyyyMMdd)$(rev:.r)
+jobs:
+- job: Phase_1
+  displayName: Phase 1
+  cancelTimeoutInMinutes: 1
+  pool:
+    name: Default
+  steps:
+  - checkout: self
+    clean: true
+  - task: Maven@3
+    displayName: Maven pom.xml
+    enabled: False
+    inputs:
+      mavenPOMFile: $(BuildParameters.mavenPOMFile)
+      goals: $(goal)
+      options: -Dmaven.test.failure.ignore=true -Pcoverage -Dsonar.host.url=$(sonar-url) -Dsonar.login=$(sonar-apikey)  -Dsonar.branch.name=service -Dsonar.projectKey=com.electrabel.neos:neos:SERVICE -Dsonar.projectName="JavaBE:nEOS"
+      testResultsFiles: '**/TEST-*.xml'
+      jdkVersion: 1.11
+      mavenOpts: -Xms512m -Xmx1024m
+      mavenFeedAuthenticate: true
+  - task: ArtifactoryToolsInstaller@1
+    displayName: Using Jfrog CLI 1.54.0
+    inputs:
+      artifactoryService: art2
+      cliInstallationRepo: manu-libs-release
+      installCustomVersion: true
+      cliVersion: 1.54.0
+  - task: JavaToolInstaller@0
+    displayName: Use Java 11
+    inputs:
+      versionSpec: 11
+      jdkArchitectureOption: x64
+      jdkSourceOption: PreInstalled
+  - task: PowerShell@2
+    displayName: Set MAVEN_OPTS
+    inputs:
+      targetType: inline
+      script: >-
+        $env:MAVEN_OPTS="-Xms1024m -Xmx4096m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none"
+
+        write-host "before: $($env:MAVEN_OPTS)"
+  - task: ArtifactoryMaven@2
+    displayName: Artifactory Maven
+    inputs:
+      goals: $(goal)
+      options: -Dmaven.test.failure.ignore=true -Pcoverage -Dsonar.host.url=$(sonar-url) -Dsonar.login=$(sonar-apikey)  -Dsonar.branch.name=service -Dsonar.projectKey=com.electrabel.neos:neos:SERVICE -Dsonar.projectName="JavaBE:nEOS" -X
+      artifactoryResolverService: 1d72267f-d129-4f69-88b1-2d1df042cf3c
+      targetResolveReleaseRepo: manu-libs-release
+      targetResolveSnapshotRepo: manu-libs-snapshot
+  - task: PowerShell@2
+    displayName: MAVEN_OPTS after maven step
+    condition: succeededOrFailed()
+    inputs:
+      targetType: inline
+      script: write-host "$($env:MAVEN_OPTS)"
