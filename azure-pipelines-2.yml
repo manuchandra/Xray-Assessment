@@ -33,10 +33,10 @@ jobs:
   - task: ArtifactoryToolsInstaller@1
     displayName: Using Jfrog CLI 1.54.0
     inputs:
-      artifactoryService: art2
-      cliInstallationRepo: manu-libs-release
+      artifactoryService: 'art1'
+      cliInstallationRepo: 'manu-libs-release'
       installCustomVersion: true
-      cliVersion: 1.54.0
+      cliVersion: '1.54.0'
   - task: JavaToolInstaller@0
     displayName: Use Java 11
     inputs:
