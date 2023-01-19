@@ -29,6 +29,7 @@ steps:
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
+    mavenVersionOption: 'Default'
     mavenOptions: '-Xmx10m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.11'
