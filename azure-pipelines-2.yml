@@ -4,10 +4,13 @@ variables:
 - name: BuildParameters.mavenPOMFile
   value: pom.xml
 trigger:
-  branches:
-    include:
-    - refs/heads/master
-name: $(date:yyyyMMdd)$(rev:.r)
+ - main
+  pool:
+    vmImage: ubuntu-latest
+ # branches:
+    #include:
+   # - refs/heads/master
+#name: $(date:yyyyMMdd)$(rev:.r)
 jobs:
 - job: Phase_1
   displayName: Phase 1
@@ -21,20 +24,27 @@ jobs:
     displayName: Maven pom.xml
     enabled: False
     inputs:
-      mavenPOMFile: $(BuildParameters.mavenPOMFile)
-      goals: $(goal)
-      options: -Dmaven.test.failure.ignore=true -Pcoverage -Dsonar.host.url=$(sonar-url) -Dsonar.login=$(sonar-apikey)  -Dsonar.branch.name=service -Dsonar.projectKey=com.electrabel.neos:neos:SERVICE -Dsonar.projectName="JavaBE:nEOS"
-      testResultsFiles: '**/TEST-*.xml'
-      jdkVersion: 1.11
+      mavenPomFile: 'pom.xml'
+      goals: 'install'
+      artifactoryResolverService: 'art2'
+      targetResolveReleaseRepo: 'manu-libs-release'
+      targetResolveSnapshotRepo: 'manu-libs-snapshot'
+      artifactoryDeployService: 'art2'
+      targetDeployReleaseRepo: 'manu-libs-release'
+      targetDeploySnapshotRepo: 'manu-libs-snapshot'
+      collectBuildInfo: true
+      buildName: '$(Build.DefinitionName)'
+      buildNumber: '$(Build.BuildNumber)'
+      includeEnvVars: true
       mavenOpts: -Xms512m -Xmx1024m
       mavenFeedAuthenticate: true
   - task: ArtifactoryToolsInstaller@1
     displayName: Using Jfrog CLI 1.54.0
     inputs:
-      artifactoryService: 'art1'
-      cliInstallationRepo: 'manu-libs-release'
+      artifactoryService: art2
+      cliInstallationRepo: manu-libs-release
       installCustomVersion: true
-      cliVersion: '1.54.0'
+      cliVersion: 1.54.0
   - task: JavaToolInstaller@0
     displayName: Use Java 11
     inputs:
@@ -49,15 +59,6 @@ jobs:
         $env:MAVEN_OPTS="-Xms1024m -Xmx4096m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none"
 
         write-host "before: $($env:MAVEN_OPTS)"
-  - task: ArtifactoryMaven@2
-    displayName: Artifactory Maven
-    inputs:
-      mavenPomFile: 'pom.xml'
-      goals: '$(goal)'
-      options: '-Dmaven.test.failure.ignore=true -Pcoverage -Dsonar.host.url=$(sonar-url) -Dsonar.login=$(sonar-apikey)  -Dsonar.branch.name=service -Dsonar.projectKey=com.electrabel.neos:neos:SERVICE -Dsonar.projectName="JavaBE:nEOS" -X'
-      artifactoryResolverService: 'art1'
-      targetResolveReleaseRepo: 'manu-libs-release'
-      targetResolveSnapshotRepo: 'manu-libs-snapshot'
   - task: PowerShell@2
     displayName: MAVEN_OPTS after maven step
     condition: succeededOrFailed()
