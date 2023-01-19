@@ -4,13 +4,9 @@ variables:
 - name: BuildParameters.mavenPOMFile
   value: pom.xml
 trigger:
- - main
-  pool:
-    vmImage: ubuntu-latest
- # branches:
-    #include:
-   # - refs/heads/master
-#name: $(date:yyyyMMdd)$(rev:.r)
+- main
+pool:
+  vmImage: ubuntu-latest
 jobs:
 - job: Phase_1
   displayName: Phase 1
