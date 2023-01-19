@@ -43,7 +43,10 @@ steps:
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
-    script: |
-    write-host "$($env:MAVEN_OPTS)"
+    script:
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'write-host "before: $($env:MAVEN_OPTS)"'
 
 
