@@ -53,5 +53,9 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'write-host "before: $($env:MAVEN_OPTS)"'
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: 'env | sort'
 
 
