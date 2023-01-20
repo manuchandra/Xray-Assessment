@@ -28,6 +28,7 @@ steps:
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
+    mavenVersionOption: 'Default'
     mavenOptions: '-Xms10m -Xmx10m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'
     artifactoryResolverService: 'art1'
     targetResolveReleaseRepo: 'manu-libs-release'
