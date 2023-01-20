@@ -29,7 +29,7 @@ steps:
     mavenPomFile: 'pom.xml'
     goals: 'install'
     mavenVersionOption: 'Default'
-    mavenOptions: '-Xms10m -Xmx10m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'
+    mavenOptions: '-Xmx10m'
     artifactoryResolverService: 'art1'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
@@ -39,7 +39,6 @@ steps:
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
-    includeEnvVars: true
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
