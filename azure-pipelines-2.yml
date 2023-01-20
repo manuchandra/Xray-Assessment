@@ -25,7 +25,7 @@ steps:
     targetType: 'inline'
     script: 'env | sort'
 
-- task: Maven@3
+- task: ArtifactoryMaven@2
   inputs:
     goals: 'install'
     mavenPomFile: 'pom.xml'
