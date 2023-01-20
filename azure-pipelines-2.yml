@@ -33,7 +33,7 @@ steps:
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.11'
     jdkArchitectureOption: 'x64'
-    goals: 'install'
+    goals: '-Pinstall'
     publishJUnitResults: true
     mavenAuthenticateFeed: true
     artifactoryResolverService: 'art2'
