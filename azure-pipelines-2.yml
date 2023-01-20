@@ -45,7 +45,7 @@ steps:
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
-    includeEnvVars: false
+    includeEnvVars: true
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
