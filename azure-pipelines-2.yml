@@ -26,14 +26,13 @@ steps:
     script: 'env | sort'
 - task: ArtifactoryMaven@2
   inputs:
-    goals: 'install'
     mavenPomFile: 'pom.xml'
-    mavenVersionOption: 'Default'
+    goals: 'install'
     mavenOptions: '-Xms10m -Xmx10m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'
-    artifactoryResolverService: 'art2'
+    artifactoryResolverService: 'art1'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
-    artifactoryDeployService: 'art2'
+    artifactoryDeployService: 'art1'
     targetDeployReleaseRepo: 'manu-libs-release'
     targetDeploySnapshotRepo: 'manu-libs-snapshot'
     collectBuildInfo: true
