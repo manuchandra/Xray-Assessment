@@ -31,8 +31,6 @@ steps:
     mavenPomFile: 'pom.xml'
     mavenVersionOption: 'Default'
     mavenOptions: '-Xmx10m'
-    publishJUnitResults: true
-    mavenAuthenticateFeed: true
     artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
