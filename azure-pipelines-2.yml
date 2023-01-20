@@ -30,7 +30,7 @@ steps:
     goals: 'install'
     mavenPomFile: 'pom.xml'
     mavenVersionOption: 'Default'
-    mavenOptions: '-Xmx10m'
+    mavenOptions: '-Xms1024m -Xmx4096m -client -XX:MaxPermSize=500m  -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xverify:none'
     artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
