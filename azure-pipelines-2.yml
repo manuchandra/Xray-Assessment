@@ -29,7 +29,7 @@ steps:
   inputs:
     mavenPomFile: 'pom.xml'
     mavenVersionOption: 'Default'
-    mavenOptions: '-Xmx1024m'
+    mavenOptions: '-Xmx10m'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.11'
     jdkArchitectureOption: 'x64'
