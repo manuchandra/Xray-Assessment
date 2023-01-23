@@ -8,6 +8,22 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 steps: 
+- task: JFrogMaven@1
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'install'
+    mavenVersionOption: 'Default'
+    mavenOptions: '-Xmx10m'
+    artifactoryResolverService: 'art2'
+    targetResolveReleaseRepo: 'manu-libs-release'
+    targetResolveSnapshotRepo: 'manu-libs-snapshot'
+    artifactoryDeployService: 'art2'
+    targetDeployReleaseRepo: 'manu-libs-release'
+    targetDeploySnapshotRepo: 'manu-libs-snapshot'
+    collectBuildInfo: true
+    buildName: '$(Build.DefinitionName)'
+    buildNumber: '$(Build.BuildNumber)'
+    includeEnvVars: true
 - task: PowerShell@2
   inputs:
     targetType: 'inline'
@@ -40,7 +56,7 @@ steps:
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     includeEnvVars: true
-- task: ArtifactoryMaven@3
+- task: ArtifactoryMaven@2
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
