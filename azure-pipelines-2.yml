@@ -40,7 +40,7 @@ steps:
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     includeEnvVars: true
-- task: ArtifactoryMaven@2
+- task: ArtifactoryMaven@3
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
