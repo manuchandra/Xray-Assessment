@@ -24,7 +24,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'env | sort'
-- task: JFrogMaven@3
+- task: JFrogMaven@2
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
