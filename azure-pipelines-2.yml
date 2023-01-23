@@ -24,16 +24,15 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'env | sort'
-- task: ArtifactoryMaven@2
+- task: JFrogMaven@1
   inputs:
-    goals: '-P install'
     mavenPomFile: 'pom.xml'
-    mavenVersionOption: 'Default'
+    goals: 'install'
     mavenOptions: '-Xmx10m'
-    artifactoryResolverService: 'art1'
+    artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
-    artifactoryDeployService: 'art1'
+    artifactoryDeployService: 'art2'
     targetDeployReleaseRepo: 'manu-libs-release'
     targetDeploySnapshotRepo: 'manu-libs-snapshot'
     collectBuildInfo: true
