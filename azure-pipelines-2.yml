@@ -14,6 +14,7 @@ steps:
     goals: 'install'
     mavenVersionOption: 'Default'
     mavenOptions: '-Xmx10m'
+    publishJUnitResults: true
     artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
