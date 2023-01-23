@@ -28,6 +28,8 @@ steps:
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
+    mavenVersionOption: 'Default'
+    mavenOptions: '-Xmx10m'
     artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
