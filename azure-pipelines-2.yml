@@ -13,7 +13,7 @@ steps:
     mavenPomFile: 'pom.xml'
     goals: 'install'
     mavenVersionOption: 'Default'
-    env MAVEN_OPTS= '-Xmx10m'
+    env MAVEN_OPTS: '-Xmx10m'
     publishJUnitResults: true
     artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-libs-release'
