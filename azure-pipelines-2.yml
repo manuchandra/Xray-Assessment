@@ -28,11 +28,7 @@ steps:
   inputs:
     mavenPomFile: 'pom.xml'
     goals: 'install'
-- task: JFrogMaven@1
-  inputs:
-    mavenPomFile: 'pom.xml'
-    goals: 'install'
-    options: '-Xmx10m'
+    mavenOptions: '-Xmx10m'
     artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-libs-release'
     targetResolveSnapshotRepo: 'manu-libs-snapshot'
