@@ -29,11 +29,11 @@ steps:
     goals: 'install'
     options: -DXms=100m -DXmx=10m -DMaxPermSize=10m
     artifactoryResolverService: 'art2'
-    targetResolveReleaseRepo: 'manu-libs-release'
-    targetResolveSnapshotRepo: 'manu-libs-snapshot'
+    targetResolveReleaseRepo: 'manu-maven-libs-release'
+    targetResolveSnapshotRepo: 'manu-maven-libs-snapshot'
     artifactoryDeployService: 'art2'
-    targetDeployReleaseRepo: 'manu-libs-release'
-    targetDeploySnapshotRepo: 'manu-libs-snapshot'
+    targetDeployReleaseRepo: 'manu-maven-libs-release'
+    targetDeploySnapshotRepo: 'manu-maven-libs-snapshot'
     collectBuildInfo: true
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
