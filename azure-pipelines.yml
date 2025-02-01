@@ -25,9 +25,9 @@ steps:
       write-host "before: $($env:MAVEN_OPTS)"
 - task: JFrogMaven@1
   inputs:
-    mavenPomFile: "$(System.DefaultWorkingDirectory)/common/MyAccounts security Utility/pom.xml"
-    goals: 'install'
-    options: -DXms=100m -DXmx=10m -DMaxPermSize=10m
+    mavenPomFile: '/common/MyAccounts security Utility/pom.xml'
+    goals: 'clean install'
+    options: '-DXms=100m -DXmx=10m -DMaxPermSize=10m'
     artifactoryResolverService: 'art2'
     targetResolveReleaseRepo: 'manu-maven-libs-release'
     targetResolveSnapshotRepo: 'manu-maven-libs-snapshot'
@@ -38,6 +38,7 @@ steps:
     buildName: '$(Build.DefinitionName)'
     buildNumber: '$(Build.BuildNumber)'
     includeEnvVars: true
+    javaHomeOption: 'JDKVersion'
 - task: CmdLine@2
   inputs:
     script: 'env | sort'
