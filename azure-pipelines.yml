@@ -25,7 +25,7 @@ steps:
       write-host "before: $($env:MAVEN_OPTS)"
 - task: JFrogMaven@1
   inputs:
-    mavenPomFile: 'pom.xml'
+    mavenPomFile: '$(System.DefaultWorkingDirectory)/common/MyAccounts security Utility/pom.xml'
     goals: 'install'
     options: -DXms=100m -DXmx=10m -DMaxPermSize=10m
     artifactoryResolverService: 'art2'
