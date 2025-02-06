@@ -8,7 +8,7 @@ variables:
 trigger:
 - main
 pool:
-  vmImage: ubuntu-latest
+  name: 'Default'
 steps:
 - task: CmdLine@2
   inputs:
