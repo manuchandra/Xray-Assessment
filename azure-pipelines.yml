@@ -8,7 +8,7 @@ variables:
 trigger:
 - main
 pool:
-  name: 'linux-agent'
+  name: 'linux-new'
 steps:
 - task: CmdLine@2
   inputs:
